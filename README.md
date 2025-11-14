@@ -1,5 +1,5 @@
 
-# 🧬 Transcriptomics Pipeline (HISAT2 + StringTie + DESeq2)
+# Transcriptomics Pipeline (HISAT2 + StringTie + DESeq2)
 
 This repository contains a reproducible pipeline for RNA-Seq transcriptomic analysis using **HISAT2** for alignment and **StringTie** for transcript assembly and quantification, and **DESeq2**
 for differential gene expression analysis.
@@ -19,14 +19,12 @@ for differential gene expression analysis.
 ---
 
 
-## 📌 Dataset Details
+##  Dataset Details
 
 - **Organism:** *Homo sapiens* (GRCh38)  
 - **BioProjects:**  
-  - Kidney → [PRJNA93899] (https://www.ncbi.nlm.nih.gov/bioproject/PRJNA93899) # 36 single end samples
-  - 
-  - Liver → [PRJNA750472](https://www.ncbi.nlm.nih.gov/bioproject/PRJNA750472),  # 12 single end samples
-          → [PRJNA429171](https://www.ncbi.nlm.nih.gov/bioproject/PRJNA429171)  # 6 paired end sample
+  - Kidney → [PRJNA93899](https://www.ncbi.nlm.nih.gov/bioproject/PRJNA93899) -36 single end samples
+  - Liver → [PRJNA750472](https://www.ncbi.nlm.nih.gov/bioproject/PRJNA750472)-12 single end samples, [PRJNA429171](https://www.ncbi.nlm.nih.gov/bioproject/PRJNA429171) -6 paired end sample
 
 
 ## ✨ Summary of Findings
@@ -34,7 +32,7 @@ for differential gene expression analysis.
 - RNA-Seq analysis revealed distinct **tissue-specific expression** in Marburg virus–infected hosts.  
 - **Liver:** 1074 upregulated, 187 downregulated genes.  
 - **Kidney:** 972 upregulated, 363 downregulated genes.  
-- **100 common DEGs** highlighted shared antiviral and immune responses.  
+- **Common** DEGs highlighted shared antiviral and immune responses.  
 - **Hub genes** (*ANXA1*, *ATF3*, *KLF4*, *TLR2*) showed key regulatory roles.  
 - *ATF3* and *ANXA1* interacted with viral proteins *VP30* and *VP35*, indicating immune modulation.  
 - **Lariciresinol** emerged as a potential inhibitor with good ADMET properties.  

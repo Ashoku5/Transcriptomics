@@ -18,48 +18,6 @@ for differential gene expression analysis.
 
 ---
 
-## 🧩 Directory Structure
-
-Transcriptomics-Pipeline/
-│
-├── liver/ # RNA-Seq analysis for liver tissue
-│ ├── data/ # Raw FASTQ files for liver
-│ │ ├── Liver_sample.sh
-│ 
-│ ├── reference/ # Reference genome and annotation (liver)
-│ │ ├── genome.fa  
-│ │ └── annotation.gtf
-│ │
-│ ├── results/ # Output files from each step
-│ │ ├── fastqc/ # Quality check reports
-│ │ ├── merged/ # Merged assemblies
-│ │ └── deseq2/ # DESeq2 output
-│ │
-│ └── reads.sh # Pipeline script for liver dataset
-│
-├── kidney/ # RNA-Seq analysis for kidney tissue
-│ ├── data/
-│ │ ├── kidney_samples.sh
-│ │
-│ ├── reference/
-│ │ ├── genome.fa
-│ │ └── annotation.gtf
-│ │
-│ ├── results/ # Output files from each step
-│ │ ├── fastqc/ # Quality check reports
-│ │ ├── merged/ # Merged assemblies
-│ │ └── deseq2/ # DESeq2 output
-│ │
-│ └── reads.sh # Pipeline script for liver dataset
-│
-├── scripts/ # General or shared utility scripts
-│ └── deseq2_analysis.R
-│
-├── envs/ # Conda environment files
-│ └── transcriptomics.yaml
-│
-└── README.md
-
 
 ## 📌 Dataset Details
 
@@ -67,7 +25,7 @@ Transcriptomics-Pipeline/
 - **BioProjects:**  
   - Kidney → [PRJNA93899] (https://www.ncbi.nlm.nih.gov/bioproject/PRJNA93899) # 36 single end samples
   - 
-  - Liver → [PRJNA750472](https://www.ncbi.nlm.nih.gov/bioproject/PRJNA750472)  # 12 single end samples
+  - Liver → [PRJNA750472](https://www.ncbi.nlm.nih.gov/bioproject/PRJNA750472),  # 12 single end samples
           → [PRJNA429171](https://www.ncbi.nlm.nih.gov/bioproject/PRJNA429171)  # 6 paired end sample
 
 

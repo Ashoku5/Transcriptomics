@@ -1,7 +1,7 @@
 
 # Transcriptomics Pipeline (HISAT2 + StringTie + DESeq2)
 
-This repository contains a reproducible pipeline for RNA-Seq transcriptomic analysis using **HISAT2** for alignment and **StringTie** for transcript assembly and quantification, and **DESeq2**
+This repository contains a reproducible pipeline for RNA-Seq Transcriptomic analysis using **HISAT2** for alignment and **StringTie** for transcript assembly and quantification, and **DESeq2**
 for differential gene expression analysis.
 
 ---

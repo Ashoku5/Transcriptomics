@@ -25,6 +25,9 @@ conda env create -f env.yaml
 ```
 
 Once the environment is successfully created, run the main script:
+ using arguements: $1 is samples folder name,
+                   $2 is Output folder,
+                   $3 is Reference genome folder.
 
 ```bash
 ./Transcriptomics_pipeline.sh <reads_folder> <output_folder> <reference_genome>

@@ -4,7 +4,6 @@
 # Initialize conda for this shell
 eval "$(conda shell.bash hook)"
 
-
 # activate envirnment once 
 conda activate Transcriptomics_pipeline
 
@@ -21,7 +20,7 @@ conda activate Transcriptomics_pipeline
 INPUT_DIR=$1   # Arguement1
 OUT_DIR=$2
 
-if [ $# -lt 2 ]; then
+if [ $# -lt 3 ]; then
        echo "Usage: bash qc_trim_pipeline.sh <reads_dir> <output_dir>"
      exit 1
      fi
@@ -32,41 +31,35 @@ if [ $# -lt 2 ]; then
      echo
 
 # -----------------------------
-
-# Step 1: FastQC on raw reads
-
+#  Step 1: FastQC on raw reads
 # -----------------------------
+
 echo "Running FastQC on raw reads..."
 
 for fq in "$INPUT_DIR"/*.fastq.gz; do
     base=$(basename "$fq" .fastq.gz)
 
-    # Check if FastQC HTML report already exists
+ # Check if FastQC HTML report already exists
 
     if [ -f "$OUT_DIR/fastqc_raw/${base}_fastqc.html" ]; then
-
         echo "FastQC already done for $base. Skipping..."
     else
         echo "Running FastQC for $base..."
         fastqc -o "$OUT_DIR/fastqc_raw" -t 8 "$fq"
     fi
 done
-
      echo "FastQC completed."
-     echo
 
-     # ----------------------------
-     # Step 2: Trim Galore
-     # -----------------------------
+
+# ----------------------------
+# Step 2: Trim Galore
+# -----------------------------
+   
      echo "Running Trim Galore..."
-
-     # Activate Trim Galore env
-
      
+#-------- Trimming for the paired ends --------#
 
-########## Trimming for the paired ends #############  
-
-    for f in "$INPUT_DIR"/*_1.fastq.gz; do
+for f in "$INPUT_DIR"/*_1.fastq.gz; do
 
     base=$(basename "$f" _1.fastq.gz)
 
@@ -89,11 +82,11 @@ done
 
     echo "Processing paired-end sample: $base"
     trim_galore --paired -o "$OUT_DIR/trimmed" "$f" "$r" -j 8
-    done
+done
 
-     # === Process single-end reads ===
+     # -------- Process single-end reads --------#
 
-     for file in "$INPUT_DIR"/*.fastq.gz; do
+for file in "$INPUT_DIR"/*.fastq.gz; do
 
      # Skip files already handled as paired-end
 
@@ -119,12 +112,11 @@ done
      base=$(basename "$file" .fastq.gz)
      echo "Processing single-end sample: $base"
      trim_galore -o "$OUT_DIR/trimmed" "$file" -j 8
-     done
-
-     echo "upto trimming done"
+done
+ echo "upto trimming done"
      
      
-     # -----------------------------
+# -----------------------------
 # Step 3: HISAT2 indexing and alignment
 # -----------------------------
 
@@ -190,25 +182,16 @@ for f in "$OUT_DIR/trimmed/"*_trimmed.fq.gz; do
     samtools index "$OUT_DIR/alignment/${base}.bam"
     rm "$OUT_DIR/alignment/${base}.sam"
 done
-
-
 echo "HISAT2 alignment completed."
 
-
-
-
-
 ###### starting of Transcriptome assembly 
-
-
-
 
 # -----------------------------
 # Step 4: StringTie assembly (GTF per sample only) + count matrix generation
 # -----------------------------
 
 
-# Detect reference annotation (.gtf or .gff)
+# -------- Detect reference annotation (.gtf or .gff)  --------#
 
 REF_ANNOT=$(ls "$REF_DIR"/*.{gtf,gff,gff3} 2>/dev/null | head -n 1)
 
@@ -231,27 +214,26 @@ mkdir -p "$ASSEMBLY_DIR" "$COUNT_DIR"
 echo "Starting StringTie transcript assembly (GTFs) using: $(basename "$REF_ANNOT")"
 
 for bam in "$OUT_DIR/alignment/"*.bam; do
-base=$(basename "$bam" .bam)
+ base=$(basename "$bam" .bam)
 
 # Skip if GTF already exists
-if [ -f "$ASSEMBLY_DIR/${base}.gtf" ]; then
-echo "GTF already exists for $base. Skipping..."
-continue
-fi
+ if [ -f "$ASSEMBLY_DIR/${base}.gtf" ]; then
+ echo "GTF already exists for $base. Skipping..."
+ continue
+ fi
 
-echo "Processing sample: $base"
-stringtie "$bam" \
--p 8 \
--G "$REF_ANNOT" \
--o "$ASSEMBLY_DIR/${base}.gtf" \
--e
+ echo "Processing sample: $base"
+ stringtie "$bam" \
+ -p 6 \
+ -G "$REF_ANNOT" \
+ -o "$ASSEMBLY_DIR/${base}.gtf" \
+ -e
 done
 echo "✅ Per-sample GTF files generated."
 
 
 # -----------------------------
 # Step 5: Generate combined count matrix using deprep.py
-# -----------------------------
 # -----------------------------
 
 #-------- Create samples.txt automatically --------#

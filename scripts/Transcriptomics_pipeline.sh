@@ -246,64 +246,36 @@ stringtie "$bam" \
 -o "$ASSEMBLY_DIR/${base}.gtf" \
 -e
 done
-
-
 echo "✅ Per-sample GTF files generated."
+
 
 # -----------------------------
 # Step 5: Generate combined count matrix using deprep.py
 # -----------------------------
 # -----------------------------
 
-# Create samples.txt automatically
-
-# -----------------------------
+#-------- Create samples.txt automatically --------#
 
 SAMPLES_FILE="$OUT_DIR/stringtie_assembly/samples.txt"
 
 echo "Generating samples.txt for prepDE.py3..."
-
 > "$SAMPLES_FILE"  # clear file if exists
 
 for gtf in "$OUT_DIR/stringtie_assembly/"*.gtf; do
-
     base=$(basename "$gtf" .gtf)
-
     # Write: sample_name <tab> full_path_to_gtf
-
     echo -e "${base}\t${gtf}" >> "$SAMPLES_FILE"
 done
 
 echo "samples.txt created at: $SAMPLES_FILE"
 
 
-# run prepDE.py3 using this file:
+#-------- run prepDE.py3 using this file:  --------#
 
-
-SAMPLES_FILE="$OUT_DIR/stringtie_assembly/samples.txt"
-
-echo "Generating samples.txt for prepDE.py3..."
-
-> "$SAMPLES_FILE"  # clear file if exists
-
-for gtf in "$OUT_DIR/stringtie_assembly/"*.gtf; do
-
-    base=$(basename "$gtf" .gtf)
-
-    # Write: sample_name <tab> full_path_to_gtf
-
-    echo -e "${base}\t${gtf}" >> "$SAMPLES_FILE"
-done
-
-echo "samples.txt created at: $SAMPLES_FILE"
-
-
-# run prepDE.py3 using this file:
 python3  prepDE.py3 \
   -i $SAMPLES_FILE 
 
 echo "gene and transcript count matrix were generated "
-
 echo "gene and transcript count matrix were generated "
 
 conda deactivate 
